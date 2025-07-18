@@ -10,12 +10,12 @@ import { UsuarioModule } from './usuario/usuario.module';
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (config: ConfigService) => ({
-                type: config.get<'postgres' | 'mysql'>('DB_DIALECT')!,  // mudou para DB_DIALECT
+                type: config.get<'postgres' | 'mysql'>('DB_DIALECT')!,
                 host: config.get<string>('DB_HOST')!,
                 port: Number(config.get<string>('DB_PORT')),
-                username: config.get<string>('DB_USER')!,             // mudou para DB_USER
-                password: config.get<string>('DB_PASS')!,             // mudou para DB_PASS
-                database: config.get<string>('DB_NAME')!,             // mudou para DB_NAME
+                username: config.get<string>('DB_USER')!,
+                password: config.get<string>('DB_PASS')!,
+                database: config.get<string>('DB_NAME')!,
                 entities: [__dirname + '/**/*.entity{.ts,.js}'],
                 synchronize: true,
             }),

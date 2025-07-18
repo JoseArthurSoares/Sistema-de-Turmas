@@ -4,6 +4,7 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import {Usuario} from "./entities/usuario.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
+import {where} from "sequelize";
 
 @Injectable()
 export class UsuarioService {
@@ -18,18 +19,18 @@ export class UsuarioService {
   }
 
   findAll() {
-    return `This action returns all usuario`;
+    this.usuarioRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} usuario`;
+    return this.usuarioRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
+    return this.usuarioRepository.update(id, updateUsuarioDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} usuario`;
+    return this.usuarioRepository.delete(id);
   }
 }
