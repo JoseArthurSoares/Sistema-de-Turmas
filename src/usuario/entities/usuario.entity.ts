@@ -1,4 +1,5 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Turma} from "../../turma/entities/turma.entity";
 
 @Entity('usuarios')
 export class Usuario {
@@ -20,6 +21,9 @@ export class Usuario {
         nullable: false,
     })
     tipo_usuario!: string;
+
+    @OneToMany(() => Turma, (turma) => turma.professor)
+    turmas?: Turma[];
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     criado_em!: Date;
