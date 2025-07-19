@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './usuario/usuario.module';
 import { TurmaModule } from './turma/turma.module';
+import { ParticipacaoModule } from './participacao/participacao.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { TurmaModule } from './turma/turma.module';
         }),
         UsuarioModule,
         TurmaModule,
+        ParticipacaoModule,
     ],
 })
 export class AppModule {}
