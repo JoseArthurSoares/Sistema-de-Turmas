@@ -14,23 +14,23 @@ export class UsuarioService {
       private readonly usuarioRepository: Repository<Usuario>,
   ) {}
 
-  create(createUsuarioDto: CreateUsuarioDto) {
-    this.usuarioRepository.save(createUsuarioDto);
+  async create(createUsuarioDto: CreateUsuarioDto) {
+    return this.usuarioRepository.save(createUsuarioDto);
   }
 
-  findAll() {
-    this.usuarioRepository.find();
+  async findAll() {
+    return this.usuarioRepository.find();
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return this.usuarioRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
+  async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
     return this.usuarioRepository.update(id, updateUsuarioDto);
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return this.usuarioRepository.delete(id);
   }
 }

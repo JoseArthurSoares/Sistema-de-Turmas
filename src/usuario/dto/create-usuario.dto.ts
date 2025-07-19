@@ -18,6 +18,6 @@ export class CreateUsuarioDto {
     senha!: string;
 
     @IsEnum(TipoUsuario)
-    tipo_sucesso!: TipoUsuario;
+    tipo_usuario!: TipoUsuario;
 
 }

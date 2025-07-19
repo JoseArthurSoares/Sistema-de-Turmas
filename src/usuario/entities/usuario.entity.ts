@@ -17,9 +17,9 @@ export class Usuario {
 
     @Column({
         type: 'varchar',
-        length: 20,
+        nullable: false,
     })
-    tipo_usuario!: 'professor' | 'aluno';
+    tipo_usuario!: string;
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     criado_em!: Date;
