@@ -1,6 +1,7 @@
-import {Column, CreateDateColumn, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Usuario} from "../../usuario/entities/usuario.entity";
 
+@Entity('turmas')
 export class Turma {
     @PrimaryGeneratedColumn()
     id!: number;

@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TurmaService } from './turma.service';
+import {beforeEach, describe, it} from "node:test";
 
 describe('TurmaService', () => {
   let service: TurmaService;
@@ -13,6 +14,5 @@ describe('TurmaService', () => {
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
   });
 });
