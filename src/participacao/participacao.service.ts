@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateParticipacaoDto } from './dto/create-participacao.dto';
-import { UpdateParticipacaoDto } from './dto/update-participacao.dto';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Participacao} from "./entities/participacao.entity";
 import {DeepPartial, Repository} from "typeorm";
@@ -44,10 +43,6 @@ export class ParticipacaoService {
 
   async findOne(id: number) {
     return this.participacaoRepository.findOne({where: {id: id}});
-  }
-
-  update(id: number, updateParticipacaoDto: UpdateParticipacaoDto) {
-    return `This action updates a #${id} participacao`;
   }
 
   async remove(id: number) {
