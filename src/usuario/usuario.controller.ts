@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Put} from '@nestjs/common';
+import {Controller, Get, Post, Body, Param, Delete, Put} from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -20,10 +20,9 @@ export class UsuarioController {
     return await this.usuarioService.findAll();
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Recupera usuário pelo id' })
-  async findOne(@Param('id') id: number) {
-    return await this.usuarioService.findOne(+id);
+  @Get(':email')
+  async findOne(@Param('email') email: string) {
+    return await this.usuarioService.findOne(email);
   }
 
   @Put(':id')

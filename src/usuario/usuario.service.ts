@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUsuarioDto } from './dto/create-usuario.dto';
-import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import {Injectable} from '@nestjs/common';
+import {CreateUsuarioDto} from './dto/create-usuario.dto';
+import {UpdateUsuarioDto} from './dto/update-usuario.dto';
 import {Usuario} from "./entities/usuario.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
-import {where} from "sequelize";
+import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class UsuarioService {
@@ -15,6 +16,7 @@ export class UsuarioService {
   ) {}
 
   async create(createUsuarioDto: CreateUsuarioDto) {
+    createUsuarioDto.senha = await bcrypt.hash(createUsuarioDto.senha, 10);
     return this.usuarioRepository.save(createUsuarioDto);
   }
 
@@ -22,8 +24,8 @@ export class UsuarioService {
     return this.usuarioRepository.find();
   }
 
-  async findOne(id: number) {
-    return this.usuarioRepository.findOne({ where: { id } });
+  async findOne(email: string) {
+    return this.usuarioRepository.findOne({ where: { email } });
   }
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
