@@ -22,7 +22,6 @@ export class CreateUsuarioDto {
     senha!: string;
 
     @IsEnum(TipoUsuario)
-    @ApiProperty({ example: 'Professor', enum: ['Professor', 'Aluno'] })
     tipo_usuario!: TipoUsuario;
 
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import { CreateParticipacaoDto } from './dto/create-participacao.dto';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Participacao} from "./entities/participacao.entity";
@@ -25,9 +25,30 @@ export class ParticipacaoService {
     const usuario = await this.usuarioRepository.findOne({
       where:{ id: createParticipacaoDto.usuarioId}
     });
+
     const turma = await this.turmaRepository.findOne({
       where:{ id: createParticipacaoDto.turmaId}
-    })
+    });
+
+    if (!usuario) {
+        throw new NotFoundException('Usuário não foi encontrado');
+    }
+
+    if (!turma) {
+        throw new NotFoundException('Turma não foi encontrada');
+    }
+
+    if (usuario.tipo_usuario === 'PROFESSOR') {
+        const professorExistente = await this.participacaoRepository.findOne({
+            where: {
+                turma: { id: turma.id },
+                usuario: { tipo_usuario: 'PROFESSOR' },
+            },
+        });
+        if (professorExistente) {
+            throw new ConflictException('Só é possível cadastrar um professor por turma.');
+        }
+    }
 
     const participacao = this.participacaoRepository.create({
       usuario,
@@ -42,10 +63,18 @@ export class ParticipacaoService {
   }
 
   async findOne(id: number) {
-    return this.participacaoRepository.findOne({where: {id: id}});
+      const participacao = await this.participacaoRepository.findOne({where: {id: id}});
+      if (!participacao) {
+          throw new NotFoundException(`Participação não foi encontrada`);
+      }
+      return participacao;
   }
 
   async remove(id: number) {
-    return this.participacaoRepository.delete(id);
+      const participacao = await this.participacaoRepository.findOne({where: {id: id}});
+      if (!participacao) {
+            throw new NotFoundException(`Participação não foi encontrada`);
+        }
+      return this.participacaoRepository.delete(id);
   }
 }
