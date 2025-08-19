@@ -1,4 +1,5 @@
 import {IsNotEmpty, IsNumber, IsOptional, IsPositive, Length} from "class-validator";
+import {Unique} from "typeorm";
 
 export class CreateTurmaDto {
 

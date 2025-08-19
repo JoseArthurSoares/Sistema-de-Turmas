@@ -1,21 +1,21 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Put} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards} from '@nestjs/common';
 import { TurmaService } from './turma.service';
 import { CreateTurmaDto } from './dto/create-turma.dto';
 import { UpdateTurmaDto } from './dto/update-turma.dto';
 import {ApiOperation} from "@nestjs/swagger";
+import {Roles} from "../auth/guards/roles.decorator";
 
 @Controller('turma')
 export class TurmaController {
   constructor(private readonly turmaService: TurmaService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Cria uma nova turma' })
+  @Roles('Professor')
   async create(@Body() createTurmaDto: CreateTurmaDto) {
     return await this.turmaService.create(createTurmaDto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Recupera todas as turmas' })
   findAll() {
     return this.turmaService.findAll();
   }
@@ -27,13 +27,13 @@ export class TurmaController {
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Atualiza turma' })
+  @Roles('Professor')
   update(@Param('id') id: string, @Body() updateTurmaDto: UpdateTurmaDto) {
     return this.turmaService.update(+id, updateTurmaDto);
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Deleta turma' })
+  @Roles('Professor')
   remove(@Param('id') id: string) {
     return this.turmaService.remove(+id);
   }
