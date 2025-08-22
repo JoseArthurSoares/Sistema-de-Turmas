@@ -5,6 +5,7 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { TurmaModule } from './turma/turma.module';
 import { ParticipacaoModule } from './participacao/participacao.module';
 import { AuthModule } from './auth/auth.module';
+import { PostagemModule } from './postagem/postagem.module';
 
 @Module({
     imports: [
@@ -27,6 +28,7 @@ import { AuthModule } from './auth/auth.module';
         TurmaModule,
         ParticipacaoModule,
         AuthModule,
+        PostagemModule,
     ],
 })
 export class AppModule {}

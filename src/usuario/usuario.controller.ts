@@ -22,7 +22,7 @@ export class UsuarioController {
 
   @Get(':email')
   async findOne(@Param('email') email: string) {
-    return await this.usuarioService.findOne(email);
+    return await this.usuarioService.findOneByEmail(email);
   }
 
   @Put(':id')

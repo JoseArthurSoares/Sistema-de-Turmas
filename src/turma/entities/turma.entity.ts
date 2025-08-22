@@ -1,5 +1,6 @@
-import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Usuario} from "../../usuario/entities/usuario.entity";
+import {Postagem} from "../../postagem/entities/postagem.entity";
 
 @Entity('turmas')
 export class Turma {
@@ -21,4 +22,7 @@ export class Turma {
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     criadoEm!: Date;
+
+    @OneToMany(() => Postagem, (postagem) => postagem.turma)
+    postagens?: Postagem[];
 }

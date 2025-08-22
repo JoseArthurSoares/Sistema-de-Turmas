@@ -18,7 +18,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(email: string, pass: string): Promise<Omit<Usuario, 'senha'>> {
-        console.log('Usuario: ', await this.usuarioService.findOne(email));
+        console.log('Usuario: ', await this.usuarioService.findOneByEmail(email));
         const user = await this.authService.validateUser(email, pass);
 
         if (!user) {

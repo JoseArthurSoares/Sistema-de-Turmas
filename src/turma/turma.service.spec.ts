@@ -120,7 +120,6 @@ describe('TurmaService', () => {
         it('deve lançar ConflictException se já existir uma turma com o mesmo código de convite', async () => {
             // Arrange
             mockTurmaRepository.findOne.mockImplementation((options) => {
-                // Simula que a checagem de nome passou (null), mas a de código encontrou algo
                 if (options.where.codigo_convite === createTurmaDto.codigo_convite) {
                     return Promise.resolve({ id: 'uuid-existente', ...createTurmaDto });
                 }
@@ -132,30 +131,6 @@ describe('TurmaService', () => {
                 new ConflictException('Este código de convite já está em uso.'),
             );
         });
-
-        //Tirar dúvida com professor
-        /*
-        it('deve lançar BadRequestException se o nome da turma estiver vazio', async () => {
-            // Arrange
-            const dtoNomeVazio = { ...createTurmaDto, nome: '' };
-
-            // Act & Assert
-            await expect(service.create(dtoNomeVazio)).rejects.toThrow(
-                new BadRequestException('O nome da turma não pode ser vazio.'),
-            );
-        });
-
-        it('deve lançar BadRequestException se o código de convite não for fornecido', async () => {
-            // Arrange
-            const dtoSemCodigo = { nome: 'Turma X', descricao: 'Desc' } as any; // Forçando a falta do código
-
-            // Act & Assert
-            await expect(service.criar(dtoSemCodigo, professorUser)).rejects.toThrow(
-                new BadRequestException('O código de convite é obrigatório.'),
-            );
-        });
-
-         */
     });
 
     describe('obterTurma', () => {
