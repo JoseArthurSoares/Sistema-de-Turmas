@@ -199,6 +199,7 @@ describe('TurmaService', () => {
                 .mockResolvedValueOnce(turmaExistente)
                 .mockResolvedValueOnce(outraTurma);
 
+
             // Act & Assert
             await expect(service.update(id, updateDto)).rejects.toThrow(
                 new ConflictException('Uma turma com este nome já existe.')
@@ -210,7 +211,7 @@ describe('TurmaService', () => {
         it('deve lançar NotFoundException ao tentar excluir uma turma inexistente', async () => {
             // Arrange
             const id = 999;
-            mockTurmaRepository.delete.mockResolvedValue({ affected: 0 });
+            mockTurmaRepository.findOne.mockResolvedValue(null);
 
             // Act & Assert
             await expect(service.remove(id)).rejects.toThrow(

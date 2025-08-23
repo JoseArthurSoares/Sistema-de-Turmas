@@ -80,19 +80,25 @@ describe('ParticipacaoService', () => {
 
         it('deve lançar ConflictException ao tentar criar participação de professor em turma que já possui professor', async () => {
             const usuario = { id: 5, tipo_usuario: 'PROFESSOR' };
-            const turma = {
-                id: 1,
-                participacoes: [{ usuario: { id: 6, tipo_usuario: 'PROFESSOR' } }],
-            };
+            const turma = { id: 1 };
 
             mockUsuarioRepository.findOne.mockResolvedValue(usuario);
             mockTurmaRepository.findOne.mockResolvedValue(turma);
 
+            mockParticipacaoRepository.findOne.mockResolvedValue({
+                id: 99,
+                usuario: { id: 6, tipo_usuario: 'PROFESSOR' },
+                turma: { id: 1 },
+            });
+
             const dto = { usuarioId: 5, turmaId: 1 };
 
             await expect(service.create(dto)).rejects.toThrow(ConflictException);
-            await expect(service.create(dto)).rejects.toThrow('Só é possível cadastrar um professor por turma.');
+            await expect(service.create(dto)).rejects.toThrow(
+                'Só é possível cadastrar um professor por turma.',
+            );
         });
+
 
         it('deve lançar NotFoundException ao tentar criar participação com usuário inexistente', async () => {
             mockUsuarioRepository.findOne.mockResolvedValue(null);

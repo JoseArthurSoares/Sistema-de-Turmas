@@ -35,18 +35,31 @@ export class TurmaService {
     if(!turma) {
       throw new NotFoundException('Turma não encontrada.');
     }
+    return turma;
   }
 
-  async update(id: number, updateTurmaDto: UpdateTurmaDto) {
-    const turma = await this.turmaRepository.findOne({ where: { id } });
-    if (!turma) {
-        throw new NotFoundException('Turma não encontrada.');
+    async update(id: number, updateTurmaDto: UpdateTurmaDto) {
+        const turma = await this.turmaRepository.findOne({ where: { id } });
+        if (!turma) {
+            throw new NotFoundException('Turma não encontrada.');
+        }
+
+        if (updateTurmaDto.nome) {
+            const turmaComMesmoNome = await this.turmaRepository.findOne({
+                where: { nome: updateTurmaDto.nome },
+            });
+
+            if (turmaComMesmoNome && turmaComMesmoNome.id !== id) {
+                throw new ConflictException('Uma turma com este nome já existe.');
+            }
+        }
+
+        return this.turmaRepository.update(id, updateTurmaDto);
     }
-    return this.turmaRepository.update(id, updateTurmaDto);
-  }
+
 
   async remove(id: number) {
-    const turma = this.turmaRepository.findOne({ where: { id } });
+    const turma = await this.turmaRepository.findOne({ where: { id } });
     if (!turma) {
         throw new NotFoundException('Turma não encontrada.');
     }
