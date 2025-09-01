@@ -4,7 +4,6 @@ import { UpdateTurmaDto } from './dto/update-turma.dto';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Turma} from "./entities/turma.entity";
 import {Repository} from "typeorm";
-import {Usuario} from "../usuario/entities/usuario.entity";
 
 @Injectable()
 export class TurmaService {

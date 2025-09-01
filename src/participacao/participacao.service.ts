@@ -59,11 +59,16 @@ export class ParticipacaoService {
   }
 
   async findAll() {
-    return this.participacaoRepository.find();
+    return this.participacaoRepository.find({
+        relations: ['usuario', 'turma']
+    });
   }
 
   async findOne(id: number) {
-      const participacao = await this.participacaoRepository.findOne({where: {id: id}});
+      const participacao = await this.participacaoRepository.findOne({
+          where: {id: id},
+          relations: ['usuario', 'turma']
+      });
       if (!participacao) {
           throw new NotFoundException(`Participação não foi encontrada`);
       }
@@ -71,10 +76,28 @@ export class ParticipacaoService {
   }
 
   async remove(id: number) {
-      const participacao = await this.participacaoRepository.findOne({where: {id: id}});
+      const participacao = await this.participacaoRepository.findOne({
+          where: {id: id},
+          relations: ['usuario', 'turma']
+      });
       if (!participacao) {
             throw new NotFoundException(`Participação não foi encontrada`);
         }
       return this.participacaoRepository.delete(id);
+  }
+
+    async findAllTurmasByUsuario(id: number) {
+      const usuario = this.usuarioRepository.findOne({ where: { id: id } });
+      if (!usuario) {
+          throw new NotFoundException('Usuário não foi encontrado');
+      }
+      const participacoes = await this.participacaoRepository.find({
+          where: { usuario: { id: id } },
+          relations: ['turma'],
+      });
+
+      return participacoes.map(p => ({
+          turma: p.turma,
+      }));
   }
 }

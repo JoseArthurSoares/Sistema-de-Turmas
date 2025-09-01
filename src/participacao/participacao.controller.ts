@@ -25,6 +25,12 @@ export class ParticipacaoController {
     return this.participacaoService.findOne(+id);
   }
 
+  @Get('usuario/:id')
+  @ApiOperation({ summary: 'Recupera todas as participações de um usuário' })
+  findAllTurmasByUsuario(@Param('id') id: string) {
+    return this.participacaoService.findAllTurmasByUsuario(+id);
+  }
+
   @Delete(':id')
   @ApiOperation({ summary: 'Deleta participação' })
   remove(@Param('id') id: string) {
